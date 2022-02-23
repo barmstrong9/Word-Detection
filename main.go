@@ -52,7 +52,7 @@ func main() {
 	}
 	dup_map := dup_count(adjectiveSlice)
 	for k, v := range dup_map {
-		fmt.Printf("Item : %s , Count : %f\n", k, v)
+		fmt.Printf("Item : %s , Count : %v\n", k, v)
 		adjSlice = append(adjSlice, k)
 		countSlice = append(countSlice, v)
 		graph(adjSlice, countSlice)
