@@ -4,25 +4,25 @@ import (
 	"bufio"
 	"fmt"
 	pos "github.com/kamildrazkiewicz/go-stanford-nlp"
-	"log"
-	"os"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/plotutil"
 	"gonum.org/v1/plot/vg"
+	"log"
+	"os"
 )
 
-var adjectiveSlice []string
-var countSlice []float64
-var adjSlice []string
+var (
+	adjectiveSlice []string
+	countSlice     []float64
+	adjSlice       []string
+
+	tagger         *pos.Tagger
+	res            []*pos.Result
+	err            error
+)
 
 func main() {
-	var (
-		tagger *pos.Tagger
-		res    []*pos.Result
-		err    error
-	)
-
 	if tagger, err = pos.NewTagger(
 		"models/english-left3words-distsim.tagger", // path to model
 		"ext/stanford-postagger.jar"); err != nil { // path to jar tagger file
@@ -57,11 +57,6 @@ func main() {
 		countSlice = append(countSlice, v)
 		graph(adjSlice, countSlice)
 	}
-
-	// if err := writeLines(lines, "foo.out.txt"); err != nil {
-	// 	log.Fatalf("writeLines: %s", err)
-	// }
-
 }
 
 func graph(k []string, v []float64) {
@@ -131,17 +126,3 @@ func readLines(path string) ([]string, error) {
 	}
 	return lines, scanner.Err()
 }
-
-// func writeLines(lines []string, path string) error {
-//     file, err := os.Create(path)
-//     if err != nil {
-//         return err
-//     }
-//     defer file.Close()
-
-//     w := bufio.NewWriter(file)
-//     for _, line := range lines {
-//         fmt.Fprintln(w, line)
-//     }
-//     return w.Flush()
-// }
